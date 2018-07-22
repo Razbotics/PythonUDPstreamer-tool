@@ -7,7 +7,7 @@ from threading import Thread, Lock
 import struct
 
 debug = True
-jpeg_quality = 40
+jpeg_quality = 30
 host = '192.168.0.103'
 port = 1080
 
@@ -15,7 +15,7 @@ class VideoGrabber(Thread):
         def __init__(self, jpeg_quality):
             Thread.__init__(self)
             self.encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
-            self.cap = cv2.VideoCapture(0)
+            self.cap = cv2.VideoCapture(1)
             self.cap.set(3, 640)
             self.cap.set(4, 480)
             self.running = True

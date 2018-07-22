@@ -44,7 +44,10 @@ class ImageGrabber(Thread):
                     continue
                 except Exception:
                     continue
-                if data == 404: #Error from server
+                if not len(data) == data_len:
+                    print "There was a image packet loss..."
+                    continue
+                if data == 404:
                     continue
                 self.lock.acquire()
                 self.array = np.frombuffer(data, dtype=np.dtype('uint8'))
@@ -72,8 +75,7 @@ if __name__ == '__main__':
             #
             try:
                 cv2.imshow("Image", img)
-            except AssertionError:
-                print "There was a image packet loss..."
+            except Exception:
                 continue
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
